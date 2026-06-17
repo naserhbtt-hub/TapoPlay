@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>TAPOPLAY - Free Online Games</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="mylogo.png" alt="TapoPlay" class="logo-img" onerror="this.style.display='none'">
+                
+                <span class="logo-text">TapoPlay</span>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search games...">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            
+            <nav class="main-nav" id="mainNav">
+                <a href="#" class="nav-link active" data-category="all">All</a>
+                <a href="#" class="nav-link" data-category="arcade">Arcade</a>
+                <a href="#" class="nav-link" data-category="adventure">Adventure</a>
+                <a href="#" class="nav-link" data-category="puzzle">Puzzle</a>
+                <a href="#" class="nav-link" data-category="sports">Sports</a>
+                <a href="#" class="nav-link" data-category="racing">Racing</a>
+                <a href="#" class="nav-link" data-category="action">Action</a>
+            </nav>
+            <button class="theme-btn" id="themeBtn">☀</button>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="closeMenuBtn">&times;</button>
+        <nav class="mobile-nav">
+            <a href="#" data-category="all">All Games</a>
+            <a href="#" data-category="arcade">Arcade</a>
+            <a href="#" data-category="adventure">Adventure</a>
+            <a href="#" data-category="puzzle">Puzzle</a>
+            <a href="#" data-category="sports">Sports</a>
+            <a href="#" data-category="racing">Racing</a>
+            <a href="#" data-category="action">Action</a>
+            <a href="#" data-category="shooter">Shooter</a>
+            <a href="#" data-category="strategy">Strategy</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2 class="hero-title">Featured Games</h2>
+            <div class="hero-grid" id="heroGrid"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="main-header">
+                <h2 class="section-title" id="sectionTitle">All Games</h2>
+                <div class="view-options">
+                    <button class="view-btn active" data-view="grid">⊞</button>
+                    <button class="view-btn" data-view="list">☰</button>
+                </div>
+            </div>
+            
+            <div class="games-grid" id="gamesGrid"></div>
+            
+            <div class="load-more">
+                <button class="load-more-btn" id="loadMoreBtn">Load More Games</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About TapoPlay</h3>
+                    <p>TapoPlay is your ultimate destination for free online games. Play Many games instantly without downloads! We offer the best selection of arcade, action, sports, puzzle, and adventure games for players of all ages.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Game Categories</h3>
+                    <ul>
+                        <li><a href="#" data-category="arcade">Arcade Games</a></li>
+                        <li><a href="#" data-category="adventure">Adventure Games</a></li>
+                        <li><a href="#" data-category="puzzle">Puzzle Games</a></li>
+                        <li><a href="#" data-category="sports">Sports Games</a></li>
+                        <li><a href="#" data-category="racing">Racing Games</a></li>
+                        <li><a href="#" data-category="action">Action Games</a></li>
+                        <li><a href="#" data-category="shooter">Shooter Games</a></li>
+                        <li><a href="#" data-category="strategy">Strategy Games</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal & Support</h3>
+                    <ul>
+                    <li><a onclick="openPrivacyModal()" style="cursor:pointer; color:#cbd5e1;">Privacy Policy</a></li>
+        <li><a onclick="openContactModal()" style="cursor:pointer; color:#cbd5e1;">Contact Us</a></li>
+        <li><a onclick="openAboutModal()" style="cursor:pointer; color:#cbd5e1;">About Us</a></li>
+    </ul>
+</div>
+
+<!-- صندوق موافقة الكوكيز لموقع TapoPlay -->
+<div id="cookieBanner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 450px; background: #1a1c2e; border: 1px solid #3b82f6; padding: 15px; border-radius: 8px; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.5); align-items: center; justify-content: space-between; gap: 15px; direction: ltr;">
+    <p style="margin: 0; font-size: 13px; color: #cbd5e1;">This site uses cookies to order games by most played and popular options.</p>
+    <button onclick="acceptCookiesHook()" style="background: #3b82f6; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">Accept</button>
+</div>
+<!-- <!-- Privacy Policy Window Data -->
+<div id="privacyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; direction:ltr;">
+    <div style="background:#1a1c2e; padding:25px; border-radius:10px; max-width:550px; color:#cbd5e1; border:1px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+        <h3 style="color:#fff; margin-top:0;">Privacy Policy</h3>
+        <div style="font-size:13px; line-height:1.6; max-height:300px; overflow-y:auto; padding-right:5px;">
+            <p>Welcome to our gaming platform. Your privacy is extremely important to us. We want to assure you that our website does not collect, store, or process any personal data from our users or players; our sole purpose is to provide a fun and safe gaming experience.</p>
+            <p>However, please note that our website displays ads through third-party advertising networks. These ad networks may use cookies to collect non-personal information about your visits (such as browser type or interests) to show you relevant ads. This data collection is handled entirely by the advertising platforms, and our website has no control over or access to this information.</p>
+            <p>By using our site, you agree to the privacy policies of these third-party ad networks.</p>
+            <p style="margin-bottom:0; border-top:1px solid #23263a; padding-top:10px; margin-top:10px;">If you have any questions or inquiries, please feel free to contact us at: <a href="mailto:tapoplay1@gmail.com" style="color:#3b82f6; text-decoration:none; font-weight:bold;">tapoplay1@gmail.com</a></p>
+        </div>
+        <button onclick="closePrivacyModal()" style="background:#3b82f6; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; margin-top:15px; width:100%; font-weight:bold;">Close</button>
+    </div>
+</div>
+
+<!-- About Us Window Data -->
+<div id="aboutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; direction:ltr;">
+    <div style="background:#1a1c2e; padding:25px; border-radius:10px; max-width:500px; color:#cbd5e1; border:1px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+        <h3 style="color:#fff; margin-top:0;">About TapoPlay</h3>
+        <p style="font-size:13px; line-height:1.6;">TapoPlay is a modern fast-loading gaming platform dedicated to bringing you the best web games instantly. Our smart engine tracks popular choices globally to build the ultimate dynamic games layout for players worldwide.</p>
+        <button onclick="closeAboutModal()" style="background:#3b82f6; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; margin-top:10px; width:100%; font-weight:bold;">Close</button>
+    </div>
+</div>
+
+<!-- Contact Us Window Data -->
+<div id="contactModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; direction:ltr;">
+    <div style="background:#1a1c2e; padding:25px; border-radius:10px; max-width:500px; color:#cbd5e1; border:1px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+        <h3 style="color:#fff; margin-top:0;">Contact Us</h3>
+        <p style="font-size:14px; line-height:1.6;">For communication or inquiries, please contact us via:<br><br>
+        <a href="mailto:tapoplay1@gmail.com" style="color:#3b82f6; font-size:16px; font-weight:bold; text-decoration:none;">tapoplay1@gmail.com</a></p>
+        <button onclick="closeContactModal()" style="background:#3b82f6; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; margin-top:15px; width:100%; font-weight:bold;">Close</button>
+    </div>
+</div>
+</div>
+
+<!-- Contact Us Window Data -->
+<div id="contactModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; direction:ltr;">
+    <div style="background:#1a1c2e; padding:25px; border-radius:10px; max-width:500px; color:#cbd5e1; border:1px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+        <h3 style="color:#fff; margin-top:0;">Contact Us</h3>
+        <p style="font-size:13px; line-height:1.6;">Have any questions, inquiries, or game submissions? Reach out to the TapoPlay administration team directly at our support channel.</p>
+        <button onclick="closeContactModal()" style="background:#3b82f6; color:#fff; border:none; padding:6px 14px; border-radius:4px; cursor:pointer;">Close</button>
+    </div>
+</div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TapoPlay. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Game Title</h3>
+            <div class="modal-controls">
+                <button class="modal-control-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+                <button class="modal-control-btn" id="muteBtn" title="Mute">🔊</button>
+                <button class="modal-control-btn" id="reloadBtn" title="Reload">↻</button>
+                <button class="modal-control-btn" id="closeModalBtn">&times;</button>
+            </div>
+        </div>
+        
+        <div class="modal-body">
+            <div class="game-container" id="gameContainer">
+                <p>Select a game to play</p>
+            </div>
+            
+            <aside class="related-sidebar">
+                <h4>Related Games</h4>
+                <div class="related-list" id="relatedList"></div>
+            </aside>
+        </div>
+        
+        <div class="game-details">
+            <div class="container">
+                <h4>About This Game</h4>
+                <p id="gameDesc">Game description will appear here.</p>
+                <h4>Controls</h4>
+                <p id="gameControls">Game controls will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+  atOptions = {
+    'key' : '32a4f3ecd7430362fcc90493bef954e7',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/32a4f3ecd7430362fcc90493bef954e7/invoke.js"></script>
+    <script src="https://pl29758601.effectivecpmnetwork.com/3b/be/64/3bbe64c7356e487133839a2e3da2b44c.js"></script>
+</body>
+</html>
