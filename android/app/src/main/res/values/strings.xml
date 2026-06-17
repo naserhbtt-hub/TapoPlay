@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">TapoPlay</string>
-    <string name="title_activity_main">TapoPlay</string>
-    <string name="package_name">com.tapoplay.app</string>
-    <string name="custom_url_scheme">com.tapoplay.app</string>
-</resources>
