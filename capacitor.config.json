@@ -1,12 +1,8 @@
-import { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  appId: 'com.tapoplay.app',
-  appName: 'TapoPlay',
-  webDir: 'www',
-  server: {
-    androidScheme: 'https'
+{
+  "appId": "com.tapoplay.app",
+  "appName": "TapoPlay",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
   }
-};
-
-export default config;
+}
