@@ -1,1 +1,8 @@
-{}
+{
+	"appId": "com.tapoplay.app",
+	"appName": "TapoPlay",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https"
+	}
+}

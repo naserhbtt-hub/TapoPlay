@@ -381,3 +381,13 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 
 function openContactModal() { document.getElementById('contactModal').style.display = 'flex'; }
 function closeContactModal() { document.getElementById('contactModal').style.display = 'none'; }
+document.addEventListener("backbutton", function (e) {
+    e.preventDefault();
+    // إذا كنت في الصفحة الرئيسية، سيخرج من التطبيق
+    if (window.location.pathname === "/index.html" || window.location.pathname === "/") {
+        navigator.app.exitApp();
+    } else {
+        // إذا كنت داخل لعبة، سيعود للصفحة السابقة
+        window.history.back();
+    }
+}, false);
