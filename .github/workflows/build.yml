@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -25,9 +25,12 @@ jobs:
         
       - name: Build and Sync
         run: |
-          npm install @capacitor/android
-          # التأكد من عدم وجود مجلد أندرويد لتجنب الخطأ السابق
+          # حذف المجلد القديم لضمان بناء نظيف
           rm -rf android
+          # تثبيت Capacitor للتحكم في الإصدار
+          npm install @capacitor/cli@latest
+          npm install @capacitor/android@latest
+          # إنشاء مجلد أندرويد جديد
           npx cap add android
           npx cap sync
           
