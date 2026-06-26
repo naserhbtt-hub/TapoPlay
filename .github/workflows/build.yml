@@ -1,47 +1,44 @@
-name: Build Android APK
+name: Build Android APK (Capacitor)
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Setup Java
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-          
+
       - name: Install dependencies
         run: npm install
-        
+
       - name: Build and Sync
-        run: |
-          # حذف المجلد القديم لضمان بناء نظيف
-          rm -rf android
-          # تثبيت Capacitor للتحكم في الإصدار
-          npm install @capacitor/cli@latest
-          npm install @capacitor/android@latest
-          # إنشاء مجلد أندرويد جديد
-          npx cap add android
-          npx cap sync
-          
-      - name: Build APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
-          
-      - name: Upload APK
+        run: npx cap sync
+
+      - name: Change Gradle Permissions
+        run: chmod +x android/gradlew
+
+      - name: Build Android APK
+        run: ./gradlew assembleDebug
+        working-directory: android
+
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
+          name: app-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
