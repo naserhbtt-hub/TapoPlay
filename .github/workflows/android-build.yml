@@ -1,0 +1,53 @@
+name: Build Android APK (Capacitor)
+
+# يتم تشغيل البناء تلقائياً بمجرد رفع الكود (Push) على فرع main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. سحب الكود كاملاً من المستودع لتتمكن البيئة من رؤية الملفات
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # 2. إعداد بيئة Node.js (تم اختيار إصدار 20 المستقر لتفادي مشاكل توافق الحزم المحدثة)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. إعداد بيئة الـ Java (تم استخدام إصدار 17 وهو المتطلب الإجباري لبناء أندرويد في البيئات الحديثة)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 4. تثبيت الحزم الأساسية ومكتبات الويب (تجهيز الـ node_modules)
+      - name: Install Dependencies
+        run: npm install
+
+      # 5. مزامنة الأكواد وجسر الـ WebView (توليد مجلدات الأندرويد والويب وربطهما سحابياً)
+      - name: Capacitor Sync
+        run: npx cap sync
+
+      # 6. منح صلاحيات التنفيذ الكاملة لمحرر الأندرويد (Gradlew) لتجنب خطأ Permission Denied الشهير
+      - name: Change Gradle Permissions
+        run: chmod +x android/gradlew
+
+      # 7. بناء ملف الـ APK الفعلي بنمط الـ Debug ليتثبت معك مباشرة دون الحاجة لمفاتيح توقيع (Keystore)
+      - name: Build Android APK
+        run: ./gradlew assembleDebug
+        working-directory: android
+
+      # 8. حفظ الملف المستخرج ورفعه على السيرفر لتقوم بتحميله فوراً بعد انتهاء العداد الأخضر
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
