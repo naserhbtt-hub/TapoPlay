@@ -2,10 +2,6 @@
 	"appId": "com.gameport.play",
 	"appName": "GamePort",
 	"webDir": "www",
-	"server": {
-		"url": "https://gameport2.netlify.app/",
-		"cleartext": true
-	},
 	"plugins": {
 		"AdMob": {
 			"androidId": "ca-app-pub-3940256099942544~3347511713"

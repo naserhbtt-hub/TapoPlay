@@ -645,4 +645,23 @@ if (window.hasOwnProperty('Capacitor')) {
     });
   }
 }
+// --- كود التحقق من الإنترنت وإظهار رسالة عند انقطاعه ---
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // وظيفة التحقق من الاتصال
+    function checkConnection() {
+        if (!navigator.onLine) {
+            alert("عذراً، لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة وإعادة المحاولة.");
+            return false;
+        }
+        return true;
+    }
 
+    // التحقق عند فتح التطبيق
+    checkConnection();
+
+    // التحقق إذا انقطع الإنترنت أثناء استخدام التطبيق
+    window.addEventListener('offline', () => {
+        alert("فقدت الاتصال بالإنترنت!");
+    });
+});
