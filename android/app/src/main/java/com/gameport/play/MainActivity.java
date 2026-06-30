@@ -1,4 +1,4 @@
-package com.tapoplay.app;
+package com.gameport.play;
 
 import com.getcapacitor.BridgeActivity;
 

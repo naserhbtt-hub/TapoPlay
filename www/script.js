@@ -269,35 +269,26 @@ class GamePort {
     }
 
     /* ── Fetch ── */
-    async fetchGames() {
-        this.showState('loading');
-        for (const mk of PROXIES) {
-            try {
-                const r = await fetch(mk(JSON_FEED), { signal: AbortSignal.timeout(8000) });
-                if (!r.ok) continue;
-                const data = await r.json();
-                const g = this.parseJSON(data);
-                if (g.length > 0) {
-                    this.allGames = g;
-                    this.limit = PAGE_SIZE;  /* reset on fresh load */
-                    console.log(`✅ ${g.length} games`);
-                    this.renderGames(); return;
-                }
-            } catch (e) { console.warn('Proxy:', e.message); }
-        }
-        try {
-            const r = await fetch(JSON_FEED, { signal: AbortSignal.timeout(8000) });
-            if (!r.ok) throw new Error(`HTTP ${r.status}`);
-            const data = await r.json();
-            const g = this.parseJSON(data);
-            if (g.length > 0) {
-                this.allGames = g;
-                this.limit = PAGE_SIZE;
-                this.renderGames(); return;
-            }
-        } catch (e) { console.error('Direct:', e.message); }
+   async fetchGames() {
+    this.showState('loading');
+    
+    try {
+        // 1. محاولة قراءة الملف المحلي أولاً (بدون إنترنت)
+        const response = await fetch('games.json'); 
+        if (!response.ok) throw new Error('لا يمكن الوصول لملف الألعاب المحلي');
+        
+        const data = await response.json();
+        const games = this.parseJSON(data);
+        
+        this.allGames = games;
+        this.renderGames();
+        console.log("تم تحميل الألعاب من الملف المحلي بنجاح");
+        
+    } catch (error) {
+        console.error("فشل تحميل الألعاب:", error);
         this.showState('error');
     }
+}
 
     parseJSON(data) {
         let raw = [];
