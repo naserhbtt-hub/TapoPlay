@@ -501,8 +501,7 @@ class GamePort {
             const card = e.target.closest('.game-card');
             if (card) {
                 e.stopPropagation();
-                this.openGame(card.dataset.url, card.dataset.title,
-                    card.dataset.w, card.dataset.h);
+                this.openGame(card.dataset.url, card.dataset.title, card.dataset.w, card.dataset.h);
             }
         });
 
@@ -646,3 +645,4 @@ if (window.hasOwnProperty('Capacitor')) {
     });
   }
 }
+
